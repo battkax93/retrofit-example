@@ -1,14 +1,11 @@
 package com.chikeandroid.retrofittutorial.data.model;
 
+import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Chike on 12/4/2016.
- */
-
-public class Owner {
-
+public class Owner implements Serializable
+{
 
     @SerializedName("reputation")
     @Expose
@@ -31,130 +28,62 @@ public class Owner {
     @SerializedName("accept_rate")
     @Expose
     private Integer acceptRate;
+    private final static long serialVersionUID = 6070071756317867201L;
 
-    /**
-     *
-     * @return
-     * The reputation
-     */
     public Integer getReputation() {
         return reputation;
     }
 
-    /**
-     *
-     * @param reputation
-     * The reputation
-     */
     public void setReputation(Integer reputation) {
         this.reputation = reputation;
     }
 
-    /**
-     *
-     * @return
-     * The userId
-     */
     public Integer getUserId() {
         return userId;
     }
 
-    /**
-     *
-     * @param userId
-     * The user_id
-     */
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    /**
-     *
-     * @return
-     * The userType
-     */
     public String getUserType() {
         return userType;
     }
 
-    /**
-     *
-     * @param userType
-     * The user_type
-     */
     public void setUserType(String userType) {
         this.userType = userType;
     }
 
-    /**
-     *
-     * @return
-     * The profileImage
-     */
     public String getProfileImage() {
         return profileImage;
     }
 
-    /**
-     *
-     * @param profileImage
-     * The profile_image
-     */
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
 
-    /**
-     *
-     * @return
-     * The displayName
-     */
     public String getDisplayName() {
         return displayName;
     }
 
-    /**
-     *
-     * @param displayName
-     * The display_name
-     */
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    /**
-     *
-     * @return
-     * The link
-     */
     public String getLink() {
         return link;
     }
 
-    /**
-     *
-     * @param link
-     * The link
-     */
     public void setLink(String link) {
         this.link = link;
     }
 
-    /**
-     *
-     * @return
-     * The acceptRate
-     */
     public Integer getAcceptRate() {
         return acceptRate;
     }
 
-    /**
-     *
-     * @param acceptRate
-     * The accept_rate
-     */
     public void setAcceptRate(Integer acceptRate) {
         this.acceptRate = acceptRate;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.chikeandroid.retrofittutorial.adapter;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chikeandroid.retrofittutorial.R;
 import com.chikeandroid.retrofittutorial.data.model.Item;
-import com.chikeandroid.retrofittutorial.data.model.Owner;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,42 +25,41 @@ public class xAdapter extends RecyclerView.Adapter<xAdapter.ViewHolder> {
 
     private List<Item> mItems;
     private Context mContext;
-    private PostItemListener mItemListener;
 
 
-    public xAdapter(Context context, List<Item> posts, PostItemListener itemListener) {
+
+    public xAdapter(Context context, List<Item> posts) {
         mItems = posts;
         mContext = context;
-        mItemListener = itemListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView ivAva;
         public TextView titleTv1;
         public TextView titleTv2;
         public TextView titleTv3;
-        PostItemListener mItemListener;
 
-        public ViewHolder(View itemView, PostItemListener postItemListener) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            titleTv1 = (TextView) itemView.findViewById(R.id.textTest1);
-            titleTv2 = (TextView) itemView.findViewById(R.id.textTest2);
-            titleTv3 = (TextView) itemView.findViewById(R.id.textTest3);
-            ivAva = (ImageView) itemView.findViewById(R.id.ivAva);
+            titleTv1 = itemView.findViewById(R.id.textTest1);
+            titleTv2 = itemView.findViewById(R.id.textTest2);
+            titleTv3 = itemView.findViewById(R.id.textTest3);
+            ivAva = itemView.findViewById(R.id.ivAva);
+//            ivAva.setOnClickListener(this);
 
-            this.mItemListener = postItemListener;
-            itemView.setOnClickListener(this);
+//            itemView.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View v) {
             Item item = getItem(getAdapterPosition());
-            this.mItemListener.onPostClick(item.getAnswerId());
+            if (v.getId() == ivAva.getId()) {
 
-            notifyDataSetChanged();
+            }
 
         }
+
     }
 
 
@@ -71,10 +71,11 @@ public class xAdapter extends RecyclerView.Adapter<xAdapter.ViewHolder> {
 
         View postView = inflater.inflate(R.layout.simple_list2, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(postView, this.mItemListener);
+        ViewHolder viewHolder = new ViewHolder(postView);
         return viewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(xAdapter.ViewHolder holder, int position) {
 
@@ -85,12 +86,18 @@ public class xAdapter extends RecyclerView.Adapter<xAdapter.ViewHolder> {
         ImageView iv1 = holder.ivAva;
 
         textView1.setText(item.getOwner().getDisplayName());
-        textView2.setText(item.getOwner().getDisplayName());
-        textView3.setText(item.getOwner().getDisplayName());
-        Picasso.get()
-                .load(item.getOwner().getProfileImage())
-                .fit()
+        textView2.setText(item.getOwner().getUserType());
+        textView3.setText(item.getOwner().getUserId().toString());
+        Picasso.get().load(item.getOwner().getProfileImage())
                 .into(iv1);
+
+        iv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "clicked IV", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -101,14 +108,11 @@ public class xAdapter extends RecyclerView.Adapter<xAdapter.ViewHolder> {
     public void updateAnswers(List<Item> items) {
         mItems = items;
         notifyDataSetChanged();
+
     }
 
     private Item getItem(int adapterPosition) {
         return mItems.get(adapterPosition);
-    }
-
-    public interface PostItemListener {
-        void onPostClick(long id);
     }
 
 }

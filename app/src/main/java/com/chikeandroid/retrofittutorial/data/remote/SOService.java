@@ -1,6 +1,6 @@
 package com.chikeandroid.retrofittutorial.data.remote;
 
-import com.chikeandroid.retrofittutorial.data.model.SOAnswersResponse;
+import com.chikeandroid.retrofittutorial.data.model.Answer;
 
 import java.util.List;
 
@@ -12,15 +12,21 @@ import retrofit2.http.Query;
  * Created by Chike on 12/3/2016.
  */
 
+
 public interface SOService {
 
-    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-    Call<SOAnswersResponse> getAnswers();
+    String url = "/answers?order=desc&sort=activity&site=stackoverflow";
 
+    @GET(url)
+    Call<Answer> getAnswers();
+
+    @GET(url)
+    Call<Answer> getDisplayImage();
     // RxJava
     // Observable<SOAnswersResponse> getAnswers();
 
-    @GET("/answers?order=desc&sort=activity&site=stackoverflow")
-    Call<List<SOAnswersResponse>> getAnswers(@Query("tagged") String tags);
+    @GET(url)
+    Call<List<Answer>> getAnswers(@Query("tagged") String tags);
+
 
 }
